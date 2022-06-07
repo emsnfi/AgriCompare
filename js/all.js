@@ -45,7 +45,7 @@ flowersBtn.addEventListener("click",e=>{
 // 水果
 fruitsBtn.addEventListener("click",e=>{
     let data=[];
-    axios.get('https://hexschool.github.io/js-filter-data/data.json').then(function(response){
+    axios.get('https://hexschool.github.io/js-filter-data/data.json').then(response=>{
         data=response.data;
         newData=[];
         newData=data.filter(item=>(item.作物名稱!==null)&&item.種類代碼==="N05");
@@ -60,10 +60,10 @@ fruitsBtn.addEventListener("click",e=>{
 })
 
 
-// 搜尋作物
-searchBtn.addEventListener("click",e=>{
+function searchCrop(){
     let data=[];
-    axios.get('https://hexschool.github.io/js-filter-data/data.json').then(function(response){
+    
+    axios.get('https://hexschool.github.io/js-filter-data/data.json').then(response=>{
         data=response.data;
         newData=[];
         newData=data.filter(item=>(item.作物名稱!==null)&&item.作物名稱.includes(crop.value));
@@ -75,12 +75,18 @@ searchBtn.addEventListener("click",e=>{
             </tr>`
         }
         sortSelect.value="排序篩選";
-        crop.value="";
+        
     });
     
     showListText.textContent="資料載入中..."
-})
+}
 
+searchBtn.addEventListener("click",searchCrop);
+crop.addEventListener("keypress", function (e) {
+    if (e.key == "Enter") {
+        searchCrop();
+    }
+  });
 
 
 // 渲染 呈現作物
